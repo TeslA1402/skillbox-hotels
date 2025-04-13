@@ -17,8 +17,11 @@ public interface UserMapper extends CommonMapper {
     @Mapping(target = "password", source = "encodedPassword")
     @Mapping(target = "username", qualifiedByName = "trim")
     @Mapping(target = "email", qualifiedByName = "normalizeEmail")
+    @Mapping(target = "role", constant = "USER")
     User toUser(UserRequest userRequest, String encodedPassword);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void partialUpdate(User newUser, @MappingTarget User user);
 }

@@ -12,6 +12,8 @@ import org.example.skillboxhotels.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -51,5 +53,12 @@ public class RoomService {
 
     public Room getById(Long id) {
         return roomRepository.findById(id).orElseThrow(() -> new NotFoundException("Room not found"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<RoomResponse> getAllByHotelId(Long hotelId) {
+        log.info("Find all rooms by hotel id: {}", hotelId);
+        Hotel hotel = hotelService.getById(hotelId);
+        return roomRepository.findAllByHotel(hotel).stream().map(roomMapper::toRoomResponse).toList();
     }
 }

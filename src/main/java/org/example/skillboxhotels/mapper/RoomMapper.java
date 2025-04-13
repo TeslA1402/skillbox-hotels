@@ -10,18 +10,18 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper
+@Mapper(uses = BookingMapper.class)
 public interface RoomMapper extends CommonMapper {
     @Mapping(target = "hotelId", source = "hotel.id")
     RoomResponse toRoomResponse(Room room);
 
-    @Mapping(target = "unavailableDates", ignore = true)
+    @Mapping(target = "bookings", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "request.name", qualifiedByName = "trim")
     @Mapping(target = "description", qualifiedByName = "trim")
     Room toRoom(RoomRequest request, Hotel hotel);
 
-    @Mapping(target = "unavailableDates", ignore = true)
+    @Mapping(target = "bookings", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "request.name", qualifiedByName = "trim")
     @Mapping(target = "description", qualifiedByName = "trim")

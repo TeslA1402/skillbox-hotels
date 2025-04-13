@@ -1,6 +1,6 @@
 package org.example.skillboxhotels.security;
 
-import lombok.RequiredArgsConstructor;
+import org.example.skillboxhotels.entity.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -30,6 +29,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(HttpMethod.POST, "/api/v*/users").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v*/hotels", "/api/v*/rooms").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.PUT, "/api/v*/hotels/*", "/api/v*/rooms/*").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, "/api/v*/hotels/*", "/api/v*/rooms/*").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/v*/bookings").hasRole(Role.ADMIN.name())
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
