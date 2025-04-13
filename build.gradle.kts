@@ -26,6 +26,7 @@ repositories {
 object Versions {
     const val MAPSTRUCT = "1.6.3"
     const val SPRINGDOC = "2.6.0"
+    const val COMMON_CSV = "1.14.0"
 }
 
 dependencies {
@@ -36,6 +37,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.mapstruct:mapstruct:${Versions.MAPSTRUCT}")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${Versions.SPRINGDOC}")
+    implementation("org.springframework.kafka:spring-kafka")
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+    implementation("org.apache.commons:commons-csv:${Versions.COMMON_CSV}")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
@@ -45,6 +49,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("com.h2database:h2")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

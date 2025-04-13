@@ -25,6 +25,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final StatService statService;
 
     @Transactional
     public UserResponse create(UserRequest userRequest) {
@@ -37,7 +38,9 @@ public class UserService implements UserDetailsService {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new ConflictException("User with the same email already exists.");
         }
-        return userMapper.toUserResponse(userRepository.save(user));
+        User persistedUser = userRepository.save(user);
+        statService.sendUserRegistered(persistedUser);
+        return userMapper.toUserResponse(persistedUser);
     }
 
     @Transactional(readOnly = true)

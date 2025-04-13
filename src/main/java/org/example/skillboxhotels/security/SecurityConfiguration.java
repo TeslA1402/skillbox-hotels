@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/api/v*/hotels", "/api/v*/rooms").hasRole(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.PUT, "/api/v*/hotels/*", "/api/v*/rooms/*").hasRole(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.DELETE, "/api/v*/hotels/*", "/api/v*/rooms/*").hasRole(Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.GET, "/api/v*/bookings").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/v*/bookings", "/api/v*/statistics/*").hasRole(Role.ADMIN.name())
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())

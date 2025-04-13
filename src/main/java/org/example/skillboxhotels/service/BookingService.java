@@ -22,6 +22,7 @@ public class BookingService {
     private final RoomService roomService;
     private final BookingMapper bookingMapper;
     private final UserService userService;
+    private final StatService statService;
 
     @Transactional
     public BookingResponse create(BookingRequest request, Long userId) {
@@ -30,6 +31,7 @@ public class BookingService {
             throw new BadRequestException("Room is booked");
         }
         Booking booking = bookingRepository.save(bookingMapper.toBooking(request, room, userService.getById(userId)));
+        statService.sendRoomBooked(booking);
         return bookingMapper.toBookingResponse(booking);
     }
 
