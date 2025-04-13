@@ -2,12 +2,13 @@ package org.example.skillboxhotels.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.skillboxhotels.controller.request.HotelFilter;
 import org.example.skillboxhotels.controller.request.HotelRequest;
 import org.example.skillboxhotels.controller.request.RateRequest;
 import org.example.skillboxhotels.controller.response.HotelResponse;
-import org.example.skillboxhotels.controller.response.RoomResponse;
 import org.example.skillboxhotels.service.HotelService;
 import org.example.skillboxhotels.service.RoomService;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/hotels")
@@ -34,8 +33,8 @@ public class HotelController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public PagedModel<HotelResponse> getAllHotels(Pageable pageable) {
-        return new PagedModel<>(hotelService.findAll(pageable));
+    public PagedModel<HotelResponse> getAllHotels(@ParameterObject HotelFilter filter, Pageable pageable) {
+        return new PagedModel<>(hotelService.findAll(filter, pageable));
     }
 
     @GetMapping("/{id}")
@@ -60,12 +59,6 @@ public class HotelController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteHotel(@PathVariable Long id) {
         hotelService.delete(id);
-    }
-
-    @GetMapping("/{id}/rooms")
-    @ResponseStatus(HttpStatus.OK)
-    public List<RoomResponse> getHotelRooms(@PathVariable Long id) {
-        return roomService.getAllByHotelId(id);
     }
 
     @PostMapping("/{id}/rate")

@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.LinkedHashSet;
@@ -26,6 +27,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "hotels")
+@FieldNameConstants(asEnum = true)
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

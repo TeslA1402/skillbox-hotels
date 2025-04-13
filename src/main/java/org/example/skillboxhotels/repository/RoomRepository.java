@@ -1,11 +1,8 @@
 package org.example.skillboxhotels.repository;
 
-import org.example.skillboxhotels.entity.Hotel;
 import org.example.skillboxhotels.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.List;
-
-public interface RoomRepository extends JpaRepository<Room, Long> {
-    List<Room> findAllByHotel(Hotel hotel);
+public interface RoomRepository extends JpaRepository<Room, Long>, JpaSpecificationExecutor<Room> {
 }

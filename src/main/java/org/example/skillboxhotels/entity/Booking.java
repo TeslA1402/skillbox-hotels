@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@FieldNameConstants(asEnum = true)
 @Table(name = "bookings", indexes = {
         @Index(name = "idx_booking_room_id", columnList = "room_id")
 })

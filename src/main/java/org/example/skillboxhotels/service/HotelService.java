@@ -2,6 +2,7 @@ package org.example.skillboxhotels.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.skillboxhotels.controller.request.HotelFilter;
 import org.example.skillboxhotels.controller.request.HotelRequest;
 import org.example.skillboxhotels.controller.request.RateRequest;
 import org.example.skillboxhotels.controller.response.HotelResponse;
@@ -24,9 +25,9 @@ public class HotelService {
     private final HotelMapper hotelMapper;
 
     @Transactional(readOnly = true)
-    public Page<HotelResponse> findAll(Pageable pageable) {
-        log.info("Find all hotels");
-        return hotelRepository.findAll(pageable).map(hotelMapper::toHotelResponse);
+    public Page<HotelResponse> findAll(HotelFilter filter, Pageable pageable) {
+        log.info("Find all hotels by filter {} and pageable: {}", filter, pageable);
+        return hotelRepository.findAll(filter.getSpecification(), pageable).map(hotelMapper::toHotelResponse);
     }
 
     @Transactional(readOnly = true)

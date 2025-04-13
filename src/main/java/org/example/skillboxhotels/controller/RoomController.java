@@ -2,9 +2,13 @@ package org.example.skillboxhotels.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.skillboxhotels.controller.request.RoomFilter;
 import org.example.skillboxhotels.controller.request.RoomRequest;
 import org.example.skillboxhotels.controller.response.RoomResponse;
 import org.example.skillboxhotels.service.RoomService;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,5 +50,11 @@ public class RoomController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRoom(@PathVariable Long id) {
         roomService.delete(id);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public PagedModel<RoomResponse> getAllRooms(@ParameterObject RoomFilter filter, Pageable pageable) {
+        return new PagedModel<>(roomService.findAll(filter, pageable));
     }
 }

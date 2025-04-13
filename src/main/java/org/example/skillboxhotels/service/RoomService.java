@@ -2,6 +2,7 @@ package org.example.skillboxhotels.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.skillboxhotels.controller.request.RoomFilter;
 import org.example.skillboxhotels.controller.request.RoomRequest;
 import org.example.skillboxhotels.controller.response.RoomResponse;
 import org.example.skillboxhotels.entity.Hotel;
@@ -9,10 +10,10 @@ import org.example.skillboxhotels.entity.Room;
 import org.example.skillboxhotels.exception.NotFoundException;
 import org.example.skillboxhotels.mapper.RoomMapper;
 import org.example.skillboxhotels.repository.RoomRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -56,9 +57,8 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public List<RoomResponse> getAllByHotelId(Long hotelId) {
-        log.info("Find all rooms by hotel id: {}", hotelId);
-        Hotel hotel = hotelService.getById(hotelId);
-        return roomRepository.findAllByHotel(hotel).stream().map(roomMapper::toRoomResponse).toList();
+    public Page<RoomResponse> findAll(RoomFilter filter, Pageable pageable) {
+        log.info("Find all rooms by filter {} and pageable: {}", filter, pageable);
+        return roomRepository.findAll(filter.getSpecification(), pageable).map(roomMapper::toRoomResponse);
     }
 }

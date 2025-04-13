@@ -6,6 +6,8 @@ import org.example.skillboxhotels.controller.request.BookingRequest;
 import org.example.skillboxhotels.controller.response.BookingResponse;
 import org.example.skillboxhotels.entity.User;
 import org.example.skillboxhotels.service.BookingService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/bookings")
@@ -27,8 +27,8 @@ public class BookingController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<BookingResponse> getAllBookings() {
-        return bookingService.findAll();
+    public PagedModel<BookingResponse> getAllBookings(Pageable pageable) {
+        return new PagedModel<>(bookingService.findAll(pageable));
     }
 
     @PostMapping

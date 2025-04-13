@@ -24,7 +24,7 @@ repositories {
 }
 
 object Versions {
-    const val MAPSTRUCT = "1.6.2"
+    const val MAPSTRUCT = "1.6.3"
     const val SPRINGDOC = "2.6.0"
 }
 

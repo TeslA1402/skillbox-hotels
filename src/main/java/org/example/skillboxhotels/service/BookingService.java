@@ -9,10 +9,10 @@ import org.example.skillboxhotels.entity.Room;
 import org.example.skillboxhotels.exception.BadRequestException;
 import org.example.skillboxhotels.mapper.BookingMapper;
 import org.example.skillboxhotels.repository.BookingRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -34,7 +34,7 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookingResponse> findAll() {
-        return bookingRepository.findAll().stream().map(bookingMapper::toBookingResponse).toList();
+    public Page<BookingResponse> findAll(Pageable pageable) {
+        return bookingRepository.findAll(pageable).map(bookingMapper::toBookingResponse);
     }
 }
