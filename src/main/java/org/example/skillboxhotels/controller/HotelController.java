@@ -3,6 +3,7 @@ package org.example.skillboxhotels.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.skillboxhotels.controller.request.HotelRequest;
+import org.example.skillboxhotels.controller.request.RateRequest;
 import org.example.skillboxhotels.controller.response.HotelResponse;
 import org.example.skillboxhotels.controller.response.RoomResponse;
 import org.example.skillboxhotels.service.HotelService;
@@ -65,5 +66,11 @@ public class HotelController {
     @ResponseStatus(HttpStatus.OK)
     public List<RoomResponse> getHotelRooms(@PathVariable Long id) {
         return roomService.getAllByHotelId(id);
+    }
+
+    @PostMapping("/{id}/rate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void rateHotel(@PathVariable Long id, @Valid @RequestBody RateRequest request) {
+        hotelService.rate(id, request);
     }
 }
