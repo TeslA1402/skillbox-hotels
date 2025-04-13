@@ -13,6 +13,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface HotelMapper extends CommonMapper {
     HotelResponse toHotelResponse(Hotel hotel);
 
+    @Mapping(target = "rooms", ignore = true)
     @Mapping(target = "rating", ignore = true)
     @Mapping(target = "numberOfRatings", ignore = true)
     @Mapping(target = "id", ignore = true)
@@ -22,6 +23,7 @@ public interface HotelMapper extends CommonMapper {
     @Mapping(target = "address", qualifiedByName = "trim")
     Hotel toHotel(HotelRequest hotelRequest);
 
+    @Mapping(target = "rooms", ignore = true)
     @Mapping(target = "rating", ignore = true)
     @Mapping(target = "numberOfRatings", ignore = true)
     @Mapping(target = "id", ignore = true)

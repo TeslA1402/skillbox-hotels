@@ -13,6 +13,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface UserMapper extends CommonMapper {
     UserResponse toUserResponse(User user);
 
+    @Mapping(target = "bookings", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", source = "encodedPassword")
     @Mapping(target = "username", qualifiedByName = "trim")

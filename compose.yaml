@@ -1,8 +1,7 @@
 services:
-  mongodb:
+  mongo:
     image: 'mongo:8.0'
     environment:
-      - 'MONGO_INITDB_DATABASE=hotels'
       - 'MONGO_INITDB_ROOT_PASSWORD=secret'
       - 'MONGO_INITDB_ROOT_USERNAME=root'
     ports:
